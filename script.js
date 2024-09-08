@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const ssuControlsDiv = document.getElementById('ssu-controls');
     
     // Replace this with the actual password you want to use
-    const adminPassword = "MoabAdmin1:D"; 
+    const adminPassword = "MCRP2024!"; 
 
     // Handle password submission
     passwordSubmitButton.addEventListener('click', () => {
