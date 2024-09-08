@@ -26,7 +26,20 @@
 
     <section id="status">
         <h2>Server Status</h2>
-        <div id="ssu-status">Checking server status...</div>
+        <div id="ssu-status">No SSU currently.</div>
+        
+        <!-- Password prompt -->
+        <div id="password-prompt">
+            <p>Admin access required to update SSU status.</p>
+            <input type="password" id="admin-password" placeholder="Enter password" />
+            <button id="password-submit" class="button">Submit</button>
+        </div>
+
+        <!-- Buttons for toggling SSU status (initially hidden) -->
+        <div id="ssu-controls" style="display: none;">
+            <button id="start-ssu" class="button">Start SSU</button>
+            <button id="end-ssu" class="button">End SSU</button>
+        </div>
     </section>
 
     <section id="discord">
