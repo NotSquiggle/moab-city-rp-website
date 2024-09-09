@@ -9,6 +9,26 @@ document.addEventListener("DOMContentLoaded", function() {
     // Replace this with the actual password you want to use
     const adminPassword = "MCRP2024!"; 
 
+    // Firebase initialization (assuming Firebase config is already added in index.html)
+    const database = firebase.database();
+
+    // Function to update SSU status in Firebase
+    function updateSSUStatus(status) {
+        database.ref('ssuStatus').set(status);
+    }
+
+    // Handle real-time SSU status updates from Firebase
+    database.ref('ssuStatus').on('value', (snapshot) => {
+        const status = snapshot.val();
+        if (status === 'active') {
+            statusDiv.textContent = "SSU is active!";
+            statusDiv.style.color = "green";
+        } else {
+            statusDiv.textContent = "No SSU currently.";
+            statusDiv.style.color = "red";
+        }
+    });
+
     // Handle password submission
     passwordSubmitButton.addEventListener('click', () => {
         const enteredPassword = passwordInput.value;
@@ -24,17 +44,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to start SSU
     startSSUButton.addEventListener('click', () => {
-        statusDiv.textContent = "SSU is active!";
-        statusDiv.style.color = "green";
+        updateSSUStatus('active');
     });
 
     // Function to end SSU
     endSSUButton.addEventListener('click', () => {
-        statusDiv.textContent = "No SSU currently.";
-        statusDiv.style.color = "red";
+        updateSSUStatus('inactive');
     });
 });
 
+// Carousel functionality
 document.addEventListener("DOMContentLoaded", function() {
     const images = document.querySelectorAll('.carousel-images img');
     let currentImageIndex = 0;
