@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const passwordInput = document.getElementById('admin-password');
     const ssuControlsDiv = document.getElementById('ssu-controls');
     
-    // Replace this with the actual password you want to use
-    const adminPassword = "MCRP2024!"; 
+    
+    const adminPassword = "LongLiveMoab2024!"; 
 
     // Supabase Initialization
-    const supabaseUrl = 'YOUR_SUPABASE_URL'; // Replace with your Supabase URL
-    const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your Supabase key
+    const supabaseUrl = 'https://bkhcacrhtailqwyukigs.supabase.co'; // Replace with your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJraGNhY3JodGFpbHF3eXVraWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjcyMTgzMjcsImV4cCI6MjA0Mjc5NDMyN30.Y73i49t-W7J9bCihRjWdLK8IRjI46FVxoQZbspQqygA'; // Replace with your Supabase key
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     // Function to fetch SSU status from Supabase
