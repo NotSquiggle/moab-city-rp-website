@@ -69,33 +69,32 @@
         <p>Moab City RP &copy; 2024</p>
     </footer>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
-
-    <!-- Firebase Initialization -->
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDZPjTnkQd71OEPuYceWXYIgFbb1lAsc8Q",
-            authDomain: "moab-city-rp-website.firebaseapp.com",
-            databaseURL: "https://moab-city-rp-website-default-rtdb.firebaseio.com",
-            projectId: "moab-city-rp-website",
-            storageBucket: "moab-city-rp-website.appspot.com",
-            messagingSenderId: "536463812969",
-            appId: "1:536463812969:web:309a74c6691cd4b4bb35f8",
-            measurementId: "G-TVP0JDGGCD"
-        };
+        // Initialize Supabase
+        const supabaseUrl = 'https://bkhcacrhtailqwyukigs.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJraGNhY3JodGFpbHF3eXVraWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjcyMTgzMjcsImV4cCI6MjA0Mjc5NDMyN30.Y73i49t-W7J9bCihRjWdLK8IRjI46FVxoQZbspQqygA'; // Replace with your API key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        // Fetch SSU status from Supabase
+        async function fetchSSUStatus() {
+            const { data, error } = await supabase
+                .from('MCRP')  // Replace with your actual table name
+                .select('status')
+                .eq('id', 1);  // Assuming SSU status is stored in a row with ID 1
 
-        // Real-time listener to update SSU status
-        database.ref('ssuStatus').on('value', (snapshot) => {
-            const status = snapshot.val();
+            if (error) {
+                console.error('Error fetching SSU status:', error.message);
+                return;
+            }
+
+            const status = data[0]?.status || 'No SSU currently';
             document.getElementById('ssu-status').innerText = `SSU Status: ${status}`;
-        });
+        }
+
+        fetchSSUStatus();
 
         // Admin password handling
         document.getElementById('password-submit').addEventListener('click', () => {
@@ -108,19 +107,28 @@
             }
         });
 
+        // Update SSU status
+        async function updateSSUStatus(status) {
+            const { error } = await supabase
+                .from('server_status')  // Replace with your actual table name
+                .update({ status })
+                .eq('id', 1);  // Assuming SSU status is stored in a row with ID 1
+
+            if (error) {
+                console.error('Error updating SSU status:', error.message);
+            } else {
+                document.getElementById('ssu-status').innerText = `SSU Status: ${status}`;
+            }
+        }
+
         // SSU start and end buttons
         document.getElementById('start-ssu').addEventListener('click', () => {
-            database.ref('ssuStatus').set('active');
+            updateSSUStatus('active');
         });
 
         document.getElementById('end-ssu').addEventListener('click', () => {
-            database.ref('ssuStatus').set('inactive');
+            updateSSUStatus('inactive');
         });
     </script>
-</body>
-</html>
-
-
-    <script src="script.js"></script>
 </body>
 </html>
